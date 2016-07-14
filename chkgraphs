@@ -4,7 +4,16 @@ if [[ $# -lt 1 ]]; then
   exit 1
 fi
 
-snap_bin=/home/Zhan/repository/snap/examples/Release
+net_stat=netstat
+script_home=`dirname "${BASH_SOURCE[0]}"`
+snap_bin_rel=$script_home/../snap/examples/Release
+if [ -d $snap_bin_rel ]; then
+  snap_bin=`cd $snap_bin_rel; pwd`/
+else # netstat is a common utility for checking network status
+  echo "Please clone and compile SNAP utilities in [`cd $script_home/..; pwd`]"
+  exit 1
+fi
+
 folder_graphs=$1
 
 if [ -e $folder_graphs ]; then
@@ -26,7 +35,7 @@ fi
   cd $folder_graphs;
   for graph in *.csv; do
     printf "% 16s" "$graph"
-    $snap_bin/netstat -i:$graph -o:$graph 2> /dev/null |
+    $snap_bin$net_stat -i:$graph -o:$graph 2> /dev/null |
       sed -n '20,25p' | sed -e 's/.*:\s*//g' |
       while read v; do printf ",% 9s" "$v"; done
     printf "\n"

@@ -1,9 +1,20 @@
+#!/bin/sh
 if [[ $# -lt 3 ]]; then
   echo "Usage: script <min scale> <max scale> <degree> [<folder>]"
   exit 1
 fi
 
-generator_bin=/home/Zhan/repository/generator/src
+script_home=`dirname "${BASH_SOURCE[0]}"`
+generator_bin_rel=$script_home/../generator/src
+if [ -d $generator_bin_rel ]; then
+  generator_bin=`cd $generator_bin_rel; pwd`/
+elif [ `type rmat > /dev/null` != 0 ]; then
+  echo "Please set random graph generators by:"
+  echo " 1. add to \$PATH environment"
+  echo " 2. put into [`cd $script_home/..; pwd`]"
+  exit 1
+fi
+
 scale_min=$1
 scale_max=$2
 degree=$3
@@ -23,6 +34,6 @@ fi
 for scale in `seq $scale_min $scale_max`; do
   echo "generating random graphs with [ scale: $scale, degree: $degree] ..."
   for gen in er ba sw rmat; do
-    "$generator_bin/$gen" -s $scale -d $degree > $folder_graphs/$gen-$scale-$degree.csv
+    "$generator_bin$gen" -s $scale -d $degree > $folder_graphs/$gen-$scale-$degree.csv
   done
 done

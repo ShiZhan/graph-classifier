@@ -9,7 +9,7 @@ folder_graphs=$1
 
 if [ -e $folder_graphs ]; then
   if [ -d $folder_graphs ]; then
-    echo "reading directory: $folder_graphs"
+    printf "% 16s,% 9s,% 9s,% 9s,% 9s,% 9s,% 9s\n" "graphs" "V" "E" "D0" "Di0" "Do0" "Dion0"
   else
     echo "$folder_graphs is not a directory"
     exit 1
@@ -24,8 +24,11 @@ fi
 
 (
   cd $folder_graphs;
-  for graph in *; do
-    echo "evaluating $graph ..."
-    $snap_bin/netstat -i:$graph -o:$graph 2> /dev/null
+  for graph in *.csv; do
+    printf "% 16s" "$graph"
+    $snap_bin/netstat -i:$graph -o:$graph 2> /dev/null |
+      sed -n '20,25p' | sed -e 's/.*:\s*//g' |
+      while read v; do printf ",% 9s" "$v"; done
+    printf "\n"
   done
 )

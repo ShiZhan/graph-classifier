@@ -1,0 +1,28 @@
+if [[ $# -lt 3 ]]; then
+  echo "Usage: script <min scale> <max scale> <degree> [<folder>]"
+  exit 1
+fi
+
+generator_bin=/home/Zhan/repository/generator/src
+scale_min=$1
+scale_max=$2
+degree=$3
+folder_graphs=$4
+
+if [ -e $folder_graphs ]; then
+  if [ -d $folder_graphs ]; then
+    echo "reusing directory: $folder_graphs"
+  else
+    echo "$folder_graphs is not a directory"
+    exit 1
+  fi
+else
+  mkdir $folder_graphs
+fi
+
+for scale in `seq $scale_min $scale_max`; do
+  echo "generating random graphs with [ scale: $scale, degree: $degree] ..."
+  for gen in er ba sw rmat; do
+    "$generator_bin/$gen" -s $scale -d $degree > $folder_graphs/$gen-$scale-$degree.csv
+  done
+done

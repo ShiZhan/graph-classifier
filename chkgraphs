@@ -1,0 +1,31 @@
+#!/bin/sh
+if [[ $# -lt 1 ]]; then
+  echo "Usage: script <folder>"
+  exit 1
+fi
+
+snap_bin=/home/Zhan/repository/snap/examples/Release
+folder_graphs=$1
+
+if [ -e $folder_graphs ]; then
+  if [ -d $folder_graphs ]; then
+    echo "reading directory: $folder_graphs"
+  else
+    echo "$folder_graphs is not a directory"
+    exit 1
+  fi
+else
+  echo "$folder_graphs does not exist"
+  exit 1
+fi
+
+# snap netstat can only ourput to current directory
+# so it'd be better to run in the same directory with dataset
+
+(
+  cd $folder_graphs;
+  for graph in *; do
+    echo "evaluating $graph ..."
+    $snap_bin/netstat -i:$graph -o:$graph 2> /dev/null
+  done
+)

@@ -6,9 +6,15 @@ fi
 
 net_stat=netstat
 script_home=`dirname "${BASH_SOURCE[0]}"`
-snap_bin_rel=$script_home/../snap/examples/Release
-if [ -d $snap_bin_rel ]; then
-  snap_bin=`cd $snap_bin_rel; pwd`/
+snap_bin_rel0=$script_home/../snap/examples/Release
+snap_bin_rel1=$script_home/../snap/examples/Debug
+snap_bin_rel2=$script_home/../snap/examples/netstat
+if [ -d $snap_bin_rel0 ]; then
+  snap_bin=`cd $snap_bin_rel0; pwd`/
+elif [ -d $snap_bin_rel1 ]; then
+  snap_bin=`cd $snap_bin_rel1; pwd`/
+elif [ -d $snap_bin_rel2 ]; then
+  snap_bin=`cd $snap_bin_rel2; pwd`/
 else # netstat is a common utility for checking network status
   echo "Please clone and compile SNAP utilities in [`cd $script_home/..; pwd`]"
   exit 1

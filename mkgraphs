@@ -1,5 +1,5 @@
 #!/bin/sh
-if [[ $# -lt 3 ]]; then
+if [ $# -lt 3 ]; then
   echo "Usage: script <min scale> <max scale> <degree> [<folder>]"
   exit 1
 fi

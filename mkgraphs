@@ -34,6 +34,6 @@ fi
 for scale in `seq $scale_min $scale_max`; do
   echo "generating random graphs with [ scale: $scale, degree: $degree] ..."
   for gen in er ba sw rmat; do
-    "$generator_bin$gen" -s $scale -d $degree > $folder_graphs/$gen-$scale-$degree.csv
+    "$generator_bin$gen" -s $scale -d $degree > $folder_graphs/$gen-$scale-$degree.txt
   done
 done

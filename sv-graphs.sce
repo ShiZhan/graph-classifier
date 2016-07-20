@@ -1,26 +1,26 @@
 //stacksize(40000000)
 location = 'C:\cygwin\home\Zhan\repository\graph-classifier\dataset\'
 edgelists = [
-  'er-8-8.csv',
-  'er-9-8.csv',
-  'er-10-8.csv',
-  'er-11-8.csv',
-//  'er-12-8.csv',
-  'ba-8-8.csv',
-  'ba-9-8.csv',
-  'ba-10-8.csv',
-  'ba-11-8.csv',
-//  'ba-12-8.csv',
-  'sw-8-8.csv',
-  'sw-9-8.csv',
-  'sw-10-8.csv',
-  'sw-11-8.csv',
-//  'sw-12-8.csv',
-  'rmat-8-8.csv',
-  'rmat-9-8.csv',
-  'rmat-10-8.csv',
-  'rmat-11-8.csv'
-//  'rmat-12-8.csv'
+  'er-8-8.txt',
+  'er-9-8.txt',
+  'er-10-8.txt',
+  'er-11-8.txt',
+//  'er-12-8.txt',
+  'ba-8-8.txt',
+  'ba-9-8.txt',
+  'ba-10-8.txt',
+  'ba-11-8.txt',
+//  'ba-12-8.txt',
+  'sw-8-8.txt',
+  'sw-9-8.txt',
+  'sw-10-8.txt',
+  'sw-11-8.txt',
+//  'sw-12-8.txt',
+  'rmat-8-8.txt',
+  'rmat-9-8.txt',
+  'rmat-10-8.txt',
+  'rmat-11-8.txt'
+//  'rmat-12-8.txt'
 ]
 
 for i = 1:size(edgelists, 1)

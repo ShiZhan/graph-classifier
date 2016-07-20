@@ -39,7 +39,7 @@ fi
 
 (
   cd $folder_graphs;
-  for graph in *.csv; do
+  for graph in *.txt; do
     printf "% 16s" "$graph"
     $snap_bin$net_stat -i:$graph -o:$graph 2> /dev/null |
       sed -n '20,25p' | sed -e 's/.*:\s*//g' |

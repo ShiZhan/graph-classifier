@@ -4,19 +4,41 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
-net_stat=netstat
 script_home=`dirname "${BASH_SOURCE[0]}"`
-snap_bin_rel0=$script_home/../snap/examples/Release
-snap_bin_rel1=$script_home/../snap/examples/Debug
-snap_bin_rel2=$script_home/../snap/examples/netstat
-if [ -d $snap_bin_rel0 ]; then
-  snap_bin=`cd $snap_bin_rel0; pwd`/
-elif [ -d $snap_bin_rel1 ]; then
-  snap_bin=`cd $snap_bin_rel1; pwd`/
-elif [ -d $snap_bin_rel2 ]; then
-  snap_bin=`cd $snap_bin_rel2; pwd`/
-else # netstat is a common utility for checking network status
-  echo "Please clone and compile SNAP utilities in [`cd $script_home/..; pwd`]"
+if [ -d $script_home/../snap/examples ]; then
+  snap_examples=`cd $script_home/../snap/examples; pwd`
+else
+  echo "SNAP required @ [$script_home/../snap]"
+  exit 1
+fi
+
+#is_win() {
+#  local os=`uname`
+#  case "$os" in
+#    CYGWIN*) return 0 ;;
+#    MSYS*)   return 0 ;;
+#    *)       return 1 ;;
+#  esac
+#}
+
+locate_snap_exec() {
+  local PRG="$1"
+  if [ -x $snap_examples/$PRG/$PRG ]; then
+    echo "$snap_examples/$PRG/$PRG"
+  elif [ -x $snap_examples/Release/$PRG.exe ]; then
+    echo "$snap_examples/Release/$PRG.exe"
+  elif [ -x $snap_examples/Debug/$PRG.exe ]; then
+    echo "$snap_examples/Debug/$PRG.exe"
+  else
+    echo ""
+  fi
+}
+
+net_stat=`locate_snap_exec netstat`
+kcore=`locate_snap_exec kcores`
+
+if [ -z $net_stat ] || [ -z $kcore ]; then
+  echo "netstat or kcore executables not found."
   exit 1
 fi
 
@@ -41,9 +63,10 @@ fi
   cd $folder_graphs;
   for graph in *.txt; do
     printf "% 16s" "$graph"
-    $snap_bin$net_stat -d:F -p:chwCv -i:$graph -o:$graph 2> /dev/null |
+    $net_stat -d:F -p:chwCv -i:$graph -o:$graph 2> /dev/null |
       sed -n '20,25p' | sed -e 's/.*:\s*//g' |
       while read v; do printf ",% 9s" "$v"; done
+    $kcore -s:F -i:$graph -o:$graph > /dev/null 2> /dev/null
     printf "\n"
   done
 )

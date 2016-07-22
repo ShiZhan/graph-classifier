@@ -31,6 +31,6 @@ for i = 1:size(edgelists, 1)
     m(u + 1, v + 1) = 1
   end
   sv = svd(m)
-  clear edges m e u v
   mprintf("% 16s %16f %16f %16f\n", edgelists(i), sv(1:3)')
+  clear edges m e u v sv
 end

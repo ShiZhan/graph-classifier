@@ -1,6 +1,6 @@
 location = 'C:\cygwin\home\Zhan\repository\graph-classifier\dataset\'
 cdf1_file = 'inDegC.rmat-12-8.txt.tab'
-cdf2_file = 'inDegC.rmat-11-8.txt.tab'
+cdf2_file = 'inDegC.rmat-8-8.txt.tab'
 
 mode(-1)
 
@@ -23,6 +23,9 @@ for r = 1:l
 end
 
 clear cdf1_file cdf2_file cdf_raw l r i i_last j v
+
+cdf1=gsort(cdf1, 'g', 'i')
+cdf2=gsort(cdf2, 'g', 'i')
 
 i1 = 1, fn1 = 0, l1 = size(cdf1, 1)
 i2 = 1, fn2 = 0, l2 = size(cdf2, 1)

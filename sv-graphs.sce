@@ -23,6 +23,8 @@ edgelists = [
 //  'rmat-12-8.txt'
 ]
 
+mode(-1)
+
 for i = 1:size(edgelists, 1)
   edges = fscanfMat(location + edgelists(i))
   for e = 1:size(edges, 1)

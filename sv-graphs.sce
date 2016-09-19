@@ -1,3 +1,5 @@
+mode(-1)
+
 //stacksize(40000000)
 location = 'C:\cygwin\home\Zhan\repository\graph-classifier\dataset\'
 edgelists = [
@@ -23,8 +25,6 @@ edgelists = [
 //  'rmat-12-8.txt'
 ]
 
-mode(-1)
-
 for i = 1:size(edgelists, 1)
   edges = fscanfMat(location + edgelists(i))
   for e = 1:size(edges, 1)
@@ -36,3 +36,5 @@ for i = 1:size(edgelists, 1)
   mprintf("% 16s %16f %16f %16f\n", edgelists(i), sv(1:3)')
   clear edges m e u v sv
 end
+
+mode(0)
